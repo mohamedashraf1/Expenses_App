@@ -39,17 +39,26 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _presentDatePicker() {
     Platform.isIOS
-        ? CupertinoDatePicker(
-            initialDateTime: DateTime.now(),
-            onDateTimeChanged: (pickedDate) {
-              if (pickedDate == null) return;
+        ? showCupertinoModalPopup(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                color: Colors.white,
+                height: 150,
+                child: CupertinoDatePicker(
+                  initialDateTime: DateTime.now(),
+                  onDateTimeChanged: (pickedDate) {
+                    if (pickedDate == null) return;
 
-              setState(() {
-                _dateTime = pickedDate;
-              });
+                    setState(() {
+                      _dateTime = pickedDate;
+                    });
+                  },
+                  maximumDate: DateTime.now(),
+                  minimumDate: DateTime(2020),
+                ),
+              );
             },
-            maximumDate: DateTime.now(),
-            minimumDate: DateTime(2020),
           )
         : showDatePicker(
             context: context,
