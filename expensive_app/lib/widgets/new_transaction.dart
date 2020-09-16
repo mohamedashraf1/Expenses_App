@@ -38,31 +38,57 @@ class _NewTransactionState extends State<NewTransaction> {
   }
 
   void _presentDatePicker() {
+    final mediaquery = MediaQuery.of(context);
     Platform.isIOS
         ? showCupertinoModalPopup(
             context: context,
             builder: (BuildContext context) {
-              return Container(
-                color: Colors.white,
-                height: 150,
-                child: CupertinoDatePicker(
-                  initialDateTime: DateTime.now(),
-                  onDateTimeChanged: (pickedDate) {
-                    if (pickedDate == null) return;
-
-                    setState(() {
-                      _dateTime = pickedDate;
-                    });
-                  },
-                  maximumDate: DateTime.now(),
-                  minimumDate: DateTime(2020),
-                ),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    color: Colors.white,
+                    height:
+                        (mediaquery.size.height - mediaquery.viewInsets.top) *
+                            0.1,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.all(0),
+                      child: Text('Done'),
+                      onPressed: () {
+                        if (_dateTime == null) _dateTime = DateTime.now();
+                        setState(() {
+                          Navigator.pop(context);
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    height:
+                        (mediaquery.size.height - mediaquery.viewInsets.top) *
+                            0.3,
+                    child: CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.date,
+                      initialDateTime:
+                          _dateTime == null ? DateTime.now() : _dateTime,
+                      onDateTimeChanged: (pickedDate) {
+                        if (pickedDate == null) return;
+                        setState(() {
+                          _dateTime = pickedDate;
+                        });
+                      },
+                      maximumDate: DateTime.now(),
+                      minimumDate: DateTime(2020),
+                    ),
+                  ),
+                ],
               );
             },
           )
         : showDatePicker(
             context: context,
-            initialDate: DateTime.now(),
+            initialDate: _dateTime == null ? DateTime.now() : _dateTime,
             firstDate: DateTime(2020),
             lastDate: DateTime.now(),
           ).then((pickedDate) {
