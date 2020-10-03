@@ -53,8 +53,8 @@ class _NewTransactionState extends State<NewTransaction> {
                         (mediaquery.size.height - mediaquery.viewInsets.top) *
                             0.1,
                     child: CupertinoButton(
-                      padding: EdgeInsets.all(0),
-                      child: Text('Done'),
+                      padding: const EdgeInsets.all(0),
+                      child: const Text('Done'),
                       onPressed: () {
                         if (_dateTime == null) _dateTime = DateTime.now();
                         setState(() {
@@ -116,7 +116,7 @@ class _NewTransactionState extends State<NewTransaction> {
             children: <Widget>[
               //CupertinoTextField(placeholder: 'Title',),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Title',
                   hintText: 'ex: new Shoes',
                 ),
@@ -124,7 +124,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 //onSubmitted: (_) => submitData(),
               ),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Amount',
                   hintText: 'ex: 60.5',
                 ),
@@ -148,7 +148,7 @@ class _NewTransactionState extends State<NewTransaction> {
               RaisedButton(
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).textTheme.button.color,
-                child: Text('Add Transaction'),
+                child: const Text('Add Transaction'),
                 onPressed: () => _submitData(),
               ),
             ],

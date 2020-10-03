@@ -28,18 +28,18 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
+              headline6: const TextStyle(
                 fontFamily: 'OpenSans',
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
-              button: TextStyle(
+              button: const TextStyle(
                 color: Colors.white,
               ),
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: TextStyle(
+                headline6: const TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 20,
                 ),
@@ -88,14 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text(
+            middle: const Text(
               'Personal Expenses',
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 GestureDetector(
-                  child: Icon(
+                  child: const Icon(
                     CupertinoIcons.add,
                   ),
                   onTap: () => _startAddNewTransaction(context),
@@ -104,12 +104,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : AppBar(
-            title: Text(
+            title: const Text(
               'Personal Expenses',
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.add,
                 ),
                 onPressed: () => _startAddNewTransaction(context),
@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                     ),
                     onPressed: () => _startAddNewTransaction(context),
