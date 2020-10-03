@@ -43,7 +43,7 @@ class _MyPageState extends State<MyPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        if (isLandScape)
+        if (isLandScape) ...[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -62,16 +62,6 @@ class _MyPageState extends State<MyPage> {
               ),
             ],
           ),
-        if (!isLandScape)
-          Container(
-            height: (mediaQuery.size.height -
-                    widget.appBar.preferredSize.height -
-                    mediaQuery.padding.top) *
-                0.3,
-            child: Chart(_recentTransacions),
-          ),
-        if (!isLandScape) txListWidget,
-        if (isLandScape)
           widget.showChart
               ? Container(
                   height: (mediaQuery.size.height -
@@ -81,6 +71,17 @@ class _MyPageState extends State<MyPage> {
                   child: Chart(_recentTransacions),
                 )
               : txListWidget,
+        ],
+        if (!isLandScape) ...[
+          Container(
+            height: (mediaQuery.size.height -
+                    widget.appBar.preferredSize.height -
+                    mediaQuery.padding.top) *
+                0.3,
+            child: Chart(_recentTransacions),
+          ),
+          txListWidget,
+        ],
       ],
     );
   }
