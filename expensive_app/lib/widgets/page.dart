@@ -29,6 +29,53 @@ class _MyPageState extends State<MyPage> {
     });
   }
 
+  List<Widget> _buildLandScapeMode(
+      MediaQueryData mediaQuery, Widget txListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Show Chart",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Switch.adaptive(
+            activeColor: Theme.of(context).accentColor,
+            onChanged: (value) {
+              setState(() {
+                widget.showChart = value;
+              });
+            },
+            value: widget.showChart,
+          ),
+        ],
+      ),
+      widget.showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      widget.appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: Chart(_recentTransacions),
+            )
+          : txListWidget,
+    ];
+  }
+
+  List<Widget> _buildPortraitMode(
+      MediaQueryData mediaQuery, Widget txListWidget) {
+    return [
+      Container(
+        height: (mediaQuery.size.height -
+                widget.appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.3,
+        child: Chart(_recentTransacions),
+      ),
+      txListWidget
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -43,45 +90,8 @@ class _MyPageState extends State<MyPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        if (isLandScape) ...[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Show Chart",
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              Switch.adaptive(
-                activeColor: Theme.of(context).accentColor,
-                onChanged: (value) {
-                  setState(() {
-                    widget.showChart = value;
-                  });
-                },
-                value: widget.showChart,
-              ),
-            ],
-          ),
-          widget.showChart
-              ? Container(
-                  height: (mediaQuery.size.height -
-                          widget.appBar.preferredSize.height -
-                          mediaQuery.padding.top) *
-                      0.7,
-                  child: Chart(_recentTransacions),
-                )
-              : txListWidget,
-        ],
-        if (!isLandScape) ...[
-          Container(
-            height: (mediaQuery.size.height -
-                    widget.appBar.preferredSize.height -
-                    mediaQuery.padding.top) *
-                0.3,
-            child: Chart(_recentTransacions),
-          ),
-          txListWidget,
-        ],
+        if (isLandScape) ..._buildLandScapeMode(mediaQuery, txListWidget),
+        if (!isLandScape) ..._buildPortraitMode(mediaQuery, txListWidget),
       ],
     );
   }
